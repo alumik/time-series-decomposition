@@ -57,11 +57,11 @@ def linear_interpolation(timestamps, values):
     return ret_timestamp, ret_values, interval
 
 
-def stl(file):
+def stl_and_plot(file, seconds=1.5e6):
     df = pd.read_csv(os.path.join('data', file))
     timestamps, values, interval = linear_interpolation(df.timestamp, df.value)
-    timestamps = timestamps[:1500000 // interval]
-    values = values[:1500000 // interval]
+    timestamps = timestamps[:seconds // interval]
+    values = values[:seconds // interval]
 
     start_time = datetime.datetime.fromtimestamp(timestamps[0])
     end_time = datetime.datetime.fromtimestamp(timestamps[-1])
@@ -82,7 +82,7 @@ def main():
 
     files = os.listdir('data')
     for file in files:
-        stl(file)
+        stl_and_plot(file)
 
 
 if __name__ == '__main__':
