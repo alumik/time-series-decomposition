@@ -60,6 +60,7 @@ def linear_interpolation(timestamps, values):
 def stl_and_plot(file, seconds=1_500_000):
     df = pd.read_csv(os.path.join('data', file))
     timestamps, values, interval = linear_interpolation(df.timestamp, df.value)
+    values = (values - values.mean()) / values.std()
     timestamps = timestamps[:seconds // interval]
     values = values[:seconds // interval]
 
