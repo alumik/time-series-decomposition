@@ -84,6 +84,7 @@ def main():
     os.makedirs('out', exist_ok=True)
     files = os.listdir('data')
     for file in files:
+        print(f'Processing {file}...')
         stl_and_plot(file)
 
 
