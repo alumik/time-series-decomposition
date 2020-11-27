@@ -2,6 +2,10 @@
 
 A practical example of time series decomposition using [statsmodels](https://www.statsmodels.org/stable/index.html).
 
+## Preview
+
+![Preview](https://raw.githubusercontent.com/AlumiK/github-playground/main/ImageHost/time-series-decomposition/preview.png)
+
 ## References
 
 - [statsmodels.tsa.seasonal.STL](https://www.statsmodels.org/stable/generated/statsmodels.tsa.seasonal.STL.html#statsmodels.tsa.seasonal.STL)
