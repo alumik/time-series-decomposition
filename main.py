@@ -5,11 +5,12 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+from typing import Sequence, Tuple
 from statsmodels.tsa.seasonal import STL
 from pandas.plotting import register_matplotlib_converters
 
 
-def linear_interpolation(timestamps, values):
+def linear_interpolation(timestamps: Sequence, values: Sequence) -> Tuple[np.ndarray, np.ndarray, int]:
     timestamps = np.asarray(timestamps, np.int64)
     values = np.asarray(values)
 
@@ -57,7 +58,7 @@ def linear_interpolation(timestamps, values):
     return ret_timestamp, ret_values, interval
 
 
-def stl_and_plot(file, seconds=1_500_000):
+def stl_and_plot(file: str, seconds: int = 1_500_000):
     df = pd.read_csv(os.path.join('data', file))
     timestamps, values, interval = linear_interpolation(df.timestamp, df.value)
     values = (values - values.mean()) / values.std()
