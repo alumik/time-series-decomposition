@@ -1,0 +1,4 @@
+name: tsa
+dependencies:
+  - statsmodels
+  - seaborn
