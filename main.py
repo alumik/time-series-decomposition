@@ -71,7 +71,7 @@ def stl_and_plot(file, seconds=1.5e6):
     stl = STL(series, period=24 * 3600 // interval, seasonal=21)
     res = stl.fit()
     res.plot()
-    plt.show()
+    plt.savefig(os.path.join('out', f'{file}.png'))
 
 
 def main():
@@ -80,6 +80,7 @@ def main():
     plt.rc('figure', figsize=(16, 12))
     plt.rc('font', size=13)
 
+    os.makedirs('out', exist_ok=True)
     files = os.listdir('data')
     for file in files:
         stl_and_plot(file)
