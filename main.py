@@ -57,7 +57,7 @@ def linear_interpolation(timestamps, values):
     return ret_timestamp, ret_values, interval
 
 
-def stl_and_plot(file, seconds=1.5e6):
+def stl_and_plot(file, seconds=1_500_000):
     df = pd.read_csv(os.path.join('data', file))
     timestamps, values, interval = linear_interpolation(df.timestamp, df.value)
     timestamps = timestamps[:seconds // interval]
