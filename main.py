@@ -30,30 +30,17 @@ def linear_interpolation(timestamps: Sequence, values: Sequence) -> Tuple[np.nda
                               timestamp_sorted[-1] + interval,
                               interval,
                               dtype=np.int64)
-    missing = np.ones([length], dtype=np.int32)
-    ret_values = np.zeros([length], dtype=values.dtype)
+    missing = np.ones(length, dtype=np.int32)
+    ret_values = np.zeros(length, dtype=values.dtype)
     dst_index = np.asarray((timestamp_sorted - timestamp_sorted[0]) // interval, dtype=np.int)
     missing[dst_index] = 0
     ret_values[dst_index] = values[src_index]
-    neg_index = np.argwhere(ret_values == -1)
-    miss_index = np.argwhere(missing == 1)
+    miss_index = np.argwhere(missing == 1).reshape(-1)
 
-    if len(neg_index) > 0:
-        neg = np.concatenate((neg_index.reshape(len(neg_index)), miss_index.reshape(len(miss_index))))
-        missing[neg] = 1
-        pos_index = np.argwhere(missing == 0)
-        pos = pos_index.reshape(len(pos_index))
-        pos_values = ret_values[pos]
-        neg_values = np.interp(neg, pos, pos_values)
-        ret_values[neg] = neg_values
-    else:
-        if len(miss_index) > 0:
-            neg = miss_index.reshape(len(miss_index))
-            pos_index = np.argwhere(missing == 0)
-            pos = pos_index.reshape(len(pos_index))
-            pos_values = ret_values[pos]
-            neg_values = np.interp(neg, pos, pos_values)
-            ret_values[neg] = neg_values
+    if len(miss_index) > 0:
+        pos_index = np.argwhere(missing == 0).reshape(-1)
+        pos_values = ret_values[pos_index]
+        ret_values[miss_index] = np.interp(miss_index, pos_index, pos_values)
 
     return ret_timestamp, ret_values, interval
 
@@ -70,6 +57,7 @@ def stl_and_plot(file: str, seconds: int = 1_500_000):
     series = pd.Series(values,
                        index=pd.date_range(start=start_time, end=end_time, freq=pd.offsets.Second(interval)),
                        name=file)
+
     stl = STL(series, period=24 * 3600 // interval, seasonal=21)
     res = stl.fit()
     res.plot()
