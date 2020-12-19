@@ -4,7 +4,7 @@ A practical example of time series decomposition using [statsmodels](https://www
 
 ## Preview
 
-![Preview](https://raw.githubusercontent.com/AlumiK/github-playground/main/ImageHost/time-series-decomposition/preview.png)
+![Preview](https://raw.githubusercontent.com/AlumiK/images/main/time-series-decomposition/preview.png)
 
 ## References
 
